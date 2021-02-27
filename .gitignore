@@ -1,0 +1,15 @@
+# Xcode
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+
+# CocoaPods
+Pods
+
+# Firebase
+TodoApp/GoogleService-Info.plist
+
