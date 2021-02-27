@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 @main
-struct TodoAppApp: App {
+struct TodoApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
