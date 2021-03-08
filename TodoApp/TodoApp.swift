@@ -10,11 +10,15 @@ import Firebase
 
 @main
 struct TodoApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    //@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    init() {
+        FirebaseApp.configure()
+    }
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }
