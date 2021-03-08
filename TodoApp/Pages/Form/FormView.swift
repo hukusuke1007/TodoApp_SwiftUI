@@ -8,13 +8,52 @@
 import SwiftUI
 
 struct FormView: View {
+    
+    @State var text: String = ""
+    @State var createdAt: String = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            HStack {
+                Text(createdAt)
+                    .foregroundColor(.gray)
+                Spacer()
+            }
+            TextField("入力してください", text: $text,
+                      onEditingChanged: { change in
+                        
+                      },
+                      onCommit: {
+                        
+                      }
+            )
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding(.top, 8)
+            .padding(.bottom, 24)
+            
+            VStack(spacing: 24) {
+                Button(action: {
+                    // TODO: -
+                }) {
+                    Text("保存")
+                }
+                Button(action: {
+                    // TODO: -
+                }) {
+                    Text("閉じる")
+                        .foregroundColor(.gray)
+                }
+            }
+        }.padding(32)
     }
 }
 
 struct FormView_Previews: PreviewProvider {
     static var previews: some View {
-        FormView()
+        ZStack {
+            
+        }.sheet(isPresented: .constant(true)) {
+            FormView()
+        }
     }
 }
