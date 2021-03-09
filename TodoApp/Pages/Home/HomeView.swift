@@ -9,8 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State var showingSetting = false
     @ObservedObject private var viewModel: HomeViewModel
+    @State private var showingSetting = false
     @State var modal: ViewItem?
     
     init() {

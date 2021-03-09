@@ -35,47 +35,48 @@ struct FormView: View {
                           }
                 )
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.top, 8)
-                .padding(.bottom, 24)
                 
-                VStack(spacing: 24) {
-                    Button(action: {
-                        viewModel.onSave { error in
-                            hideKeyboard()
-                            if let error = error {
-                                print(error)
-                                alertItem = AlertItem(
-                                    view: Alert(
-                                        title: Text("TODO"),
-                                        message: Text("保存に失敗しました"),
-                                        dismissButton: .default(Text("OK"),
-                                        action: {} )
-                                    )
-                                )
-                                return
-                            }
+            }
+            .padding(32)
+            
+            VStack(spacing: 24) {
+                Spacer()
+                Button(action: {
+                    viewModel.onSave { error in
+                        hideKeyboard()
+                        if let error = error {
+                            print(error)
                             alertItem = AlertItem(
                                 view: Alert(
                                     title: Text("TODO"),
-                                    message: Text("保存しました"),
+                                    message: Text("保存に失敗しました"),
                                     dismissButton: .default(Text("OK"),
-                                    action: { self.dismiss() })
+                                    action: {} )
                                 )
                             )
+                            return
                         }
-                    }) {
-                        Text("保存")
-                    }.disabled(viewModel.disable)
-                    
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Text("閉じる")
-                            .foregroundColor(.gray)
+                        alertItem = AlertItem(
+                            view: Alert(
+                                title: Text("TODO"),
+                                message: Text("保存しました"),
+                                dismissButton: .default(Text("OK"),
+                                action: { self.dismiss() })
+                            )
+                        )
                     }
+                }) {
+                    Text("保存")
+                        .bold()
+                }.disabled(viewModel.disable)
+                
+                Button(action: {
+                    dismiss()
+                }) {
+                    Text("閉じる")
+                        .foregroundColor(.gray)
                 }
-            }
-            .padding(32)
+            }.padding()
             
             /// ローディング
             if (viewModel.loading) {
