@@ -28,10 +28,28 @@ struct HomeView: View {
                             modal = ViewItem(view: AnyView(FormView(todo: item)))
                         }) {
                             VStack {
-                                Text(item.dateLabel)
-                                    .foregroundColor(.gray)
-                                Text(item.text)
-                                    .foregroundColor(.black)
+                                HStack {
+                                    Text(item.dateLabel)
+                                        .foregroundColor(.gray)
+                                    Spacer()
+                                }
+                                HStack {
+                                    Text(item.text)
+                                        .foregroundColor(.black)
+                                    Spacer()
+                                }
+                            }
+                        }.onAppear {
+                            /// paging
+                            if (viewModel.items.isEmpty) {
+                                return
+                            }
+                            guard let index = viewModel.items.lastIndex(where: { $0.id == item.id }) else {
+                                return
+                            }
+                            let distance = viewModel.items.distance(from: index, to: viewModel.items.endIndex)
+                            if (distance == 1) {
+                                viewModel.onLoadMore()
                             }
                         }
                     }
@@ -68,8 +86,8 @@ struct HomeView: View {
                                 .clipShape(Circle())
                                 .shadow(radius: 2, x: 1, y: 1)
                         }
-                    }.padding()
-                }.padding()
+                    }.padding(8)
+                }.padding(8)
                 
                 /// 画面遷移
                 if (showingSetting) {

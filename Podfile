@@ -9,6 +9,7 @@ target 'TodoApp' do
 
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/Auth'
 
   target 'TodoAppTests' do
     inherit! :search_paths

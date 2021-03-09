@@ -17,34 +17,38 @@ final class FormViewModel: ObservableObject {
         return text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
-    private let firestoreRepository: FirestoreRepository
-    private let isUpdate: Bool
+    private let documentRepository: DocumentRepository
+    private let firebaseAuthRepository: FirebaseAuthRepository
+    private let documentId: String?
     
     init(
-        firestoreRepository: FirestoreRepository = FirestoreRepositoryImpl(),
+        documentRepository: DocumentRepository = DocumentRepositoryImpl(),
+        firebaseAuthRepository: FirebaseAuthRepository = FirebaseAuthRepositoryImpl(),
         todo: Todo?
     ) {
-        self.firestoreRepository = firestoreRepository
+        self.documentRepository = documentRepository
+        self.firebaseAuthRepository = firebaseAuthRepository
         if let data = todo {
-            isUpdate = true
+            documentId = data.id
             self.text = data.text
             self.createdAt = data.dateLabel
         } else {
-            isUpdate = false
+            documentId = nil
         }
     }
     
     func onSave(completion: ((Error?) -> Void)? = nil) {
         loading = true
-        let docId = firestoreRepository.fetchDocId(Todo.collectionPath)
-        let data = Todo(id: docId, text: text)
-        if (isUpdate) {
-            firestoreRepository.update(data: data, documentPath: data.documentPath, completion: { [weak self] error in
+        let userId = firebaseAuthRepository.userId!
+        let docId = documentRepository.fetchDocId(Todo.collectionPath(userId: userId))
+        let item = Todo(id: documentId ?? docId, text: text)
+        if (documentId != nil) {
+            documentRepository.update(data: item.data(), documentPath: item.documentPath(userId: userId), completion: { [weak self] error in
                 self?.loading = false
                 completion?(error)
             })
         } else {
-            firestoreRepository.save(data: data, documentPath: data.documentPath, completion: { [weak self] error in
+            documentRepository.save(data: item, documentPath: item.documentPath(userId: userId), completion: { [weak self] error in
                 self?.loading = false
                 completion?(error)
             })

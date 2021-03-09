@@ -7,26 +7,44 @@
 
 import SwiftUI
 import Firebase
+import Combine
 
 @main
 struct TodoApp: App {
-    //@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
+    @ObservedObject private var viewModel: TodoAppViewModel
+  
     init() {
         FirebaseApp.configure()
+        viewModel = TodoAppViewModel()
     }
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            if (viewModel.running) {
+                HomeView()
+            }
         }
     }
 }
 
-class AppDelegate: UIResponder, UIApplicationDelegate {
- 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
-        return true
+final class TodoAppViewModel: ObservableObject {
+    
+    @Published private(set) var running: Bool = false
+    private let firebaseAuthRepository: FirebaseAuthRepository
+    
+    init(firebaseAuthRepository: FirebaseAuthRepository = FirebaseAuthRepositoryImpl()) {
+        self.firebaseAuthRepository = firebaseAuthRepository
+        let logging = firebaseAuthRepository.logging
+        if (!logging) {
+            firebaseAuthRepository.signInAnonymously { [weak self] (result, error) in
+                if let error = error { print(error); return; }
+                self?.running = true
+                print("signUp \(String(describing: self?.firebaseAuthRepository.userId))")
+            }
+        } else {
+            running = true
+            print("logging \(String(describing: firebaseAuthRepository.userId))")
+        }
     }
 }

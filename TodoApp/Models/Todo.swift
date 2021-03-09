@@ -10,10 +10,9 @@ import FirebaseFirestoreSwift
 
 struct Todo: Identifiable, Codable {
     /// Static
-    static let path: String = "todo"
-    static let collectionPath: String = "personal/v1/\(Self.path)"
-    static func documentPath(id: String) -> String {
-        return "\(Self.collectionPath)/\(id)"
+    static let collectionName: String = "todo"
+    static func collectionPath(userId: String) -> String {
+        return "personal/v1/user/\(userId)/\(Self.collectionName)"
     }
     
     /// FieldValue
@@ -23,9 +22,6 @@ struct Todo: Identifiable, Codable {
     @ServerTimestamp var updatedAt: Timestamp?
     
     /// Getter
-    var documentPath: String {
-        return Self.documentPath(id: id!)
-    }
     var dateLabel: String {
         if let data = createdAt {
             let formatter = DateFormatter()
@@ -40,5 +36,13 @@ struct Todo: Identifiable, Codable {
     init(id: String, text: String) {
         self.id = id
         self.text = text
+    }
+    
+    func data() -> [AnyHashable: Any] {
+        return ["text": text]
+    }
+    
+    func documentPath(userId: String) -> String {
+        return "\(Self.collectionPath(userId: userId))/\(id!)"
     }
 }

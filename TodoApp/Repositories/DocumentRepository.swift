@@ -1,5 +1,5 @@
 //
-//  FirestoreRepository.swift
+//  DocumentRepository.swift
 //  TodoApp
 //
 //  Created by 中川祥平 on 2021/03/09.
@@ -8,15 +8,15 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-protocol FirestoreRepository: class {
+protocol DocumentRepository: class {
     func fetchDocId(_ path: String) -> String
     func save<T: Encodable>(data: T, documentPath: String, completion: ((Error?) -> Void)?)
-    func update<T: Encodable>(data: T, documentPath: String, completion: ((Error?) -> Void)?)
+    func update(data: [AnyHashable: Any], documentPath: String, completion: ((Error?) -> Void)?)
     func delete(documentPath: String, completion: ((Error?) -> Void)?)
     func fetch<T: Decodable>(documentPath: String, completion: ((T?, Error?) -> Void)?)
 }
 
-final class FirestoreRepositoryImpl: FirestoreRepository {
+final class DocumentRepositoryImpl: DocumentRepository {
     
     private let db: Firestore
     
@@ -36,15 +36,9 @@ final class FirestoreRepositoryImpl: FirestoreRepository {
         }
     }
     
-    func update<T: Encodable>(data: T, documentPath: String, completion: ((Error?) -> Void)? = nil) {
-        do {
-            let rawData = try JSONEncoder().encode(data)
-            let dic = try JSONSerialization.jsonObject(with: rawData, options: []) as! [AnyHashable: Any]
-            let updateData = dic.merging(["updatedAt": FieldValue.serverTimestamp()]) { $1 }
-            db.document(documentPath).updateData(updateData, completion: completion)
-        } catch let error {
-            completion?(error)
-        }
+    func update(data: [AnyHashable: Any], documentPath: String, completion: ((Error?) -> Void)? = nil) {
+        let updateData = data.merging(["updatedAt": FieldValue.serverTimestamp()]) { $1 }
+        db.document(documentPath).updateData(updateData, completion: completion)
     }
     
     func delete(documentPath: String, completion: ((Error?) -> Void)? = nil) {
@@ -59,6 +53,17 @@ final class FirestoreRepositoryImpl: FirestoreRepository {
             } catch let error {
                 completion?(nil, error)
             }
+        }
+    }
+    
+    func fetchCollectionListener<T: Decodable>(collectionPath: String, completion: ((T?, Error?) -> Void)? = nil) -> ListenerRegistration  {
+        return db.collection(collectionPath).addSnapshotListener { (snapshot, error) in
+
+//            if let snapshot = snapshot {
+//                for change in snapshot.documentChanges {
+//                    if ()
+//                }
+//            }
         }
     }
 }
