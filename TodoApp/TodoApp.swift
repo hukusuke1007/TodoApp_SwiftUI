@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Firebase
-import Combine
 
 @main
 struct TodoApp: App {
@@ -35,6 +34,8 @@ final class TodoAppViewModel: ObservableObject {
     
     init(firebaseAuthRepository: FirebaseAuthRepository = FirebaseAuthRepositoryImpl()) {
         self.firebaseAuthRepository = firebaseAuthRepository
+        
+        /// 匿名認証でログイン
         let logging = firebaseAuthRepository.logging
         if (!logging) {
             firebaseAuthRepository.signInAnonymously { [weak self] (result, error) in

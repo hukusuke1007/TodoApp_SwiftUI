@@ -55,16 +55,5 @@ final class DocumentRepositoryImpl: DocumentRepository {
             }
         }
     }
-    
-    func fetchCollectionListener<T: Decodable>(collectionPath: String, completion: ((T?, Error?) -> Void)? = nil) -> ListenerRegistration  {
-        return db.collection(collectionPath).addSnapshotListener { (snapshot, error) in
-
-//            if let snapshot = snapshot {
-//                for change in snapshot.documentChanges {
-//                    if ()
-//                }
-//            }
-        }
-    }
 }
 

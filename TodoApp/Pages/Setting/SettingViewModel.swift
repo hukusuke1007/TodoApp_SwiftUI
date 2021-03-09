@@ -5,7 +5,7 @@
 //  Created by 中川祥平 on 2021/03/08.
 //
 
-import Combine
+import Foundation
 
 final class SettingViewModel: ObservableObject {
     
