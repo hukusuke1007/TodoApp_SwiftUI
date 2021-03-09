@@ -14,6 +14,17 @@ struct Todo: Identifiable, Codable {
     @ServerTimestamp var createdAt: Timestamp?
     @ServerTimestamp var updatedAt: Timestamp?
     
+    var dateLabel: String {
+        if let data = createdAt {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .none
+            formatter.doesRelativeDateFormatting = true
+            return formatter.string(from: data.dateValue())
+        }
+        return "-"
+    }
+    
     init(text: String) {
         self.id = UUID().uuidString
         self.text = text

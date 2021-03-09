@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State var items: [Todo] = []
     @State var showingSetting = false
+    @State var modal: ViewItem?
     
     var body: some View {
         NavigationView {
@@ -17,14 +18,22 @@ struct HomeView: View {
                 /// リスト
                 List {
                     ForEach(items) { item in
-                        HStack {
-                            Text(item.text)
+                        Button(action: {
+                            modal = ViewItem(view: AnyView(FormView()))
+                        }) {
+                            VStack {
+                                Text(item.dateLabel)
+                                    .foregroundColor(.gray)
+                                Text(item.text)
+                                    .foregroundColor(.black)
+                            }
                         }
                     }
                     .onDelete(perform: { indexSet in
                         items.remove(atOffsets: indexSet)
                     })
                 }
+                .listStyle(InsetGroupedListStyle())
                 .navigationBarTitle(Text("ホーム"), displayMode: .automatic)
                 .navigationBarItems(trailing: Button(action: {
                     showingSetting = true
@@ -63,7 +72,9 @@ struct HomeView: View {
                     )
                 }
             }
-        }.onAppear {
+        }
+        .sheet(item: $modal) { $0.view }
+        .onAppear {
             for i in 0..<20 {
                 items.append(Todo(text: "\(i)"))
             }
