@@ -50,7 +50,7 @@ struct HomeView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            
+                            modal = ViewItem(view: AnyView(FormView()))
                         }) {
                             Image(systemName: "plus")
                                 .frame(width: 48, height: 48)

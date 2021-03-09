@@ -10,16 +10,45 @@ import Combine
 final class FormViewModel: ObservableObject {
     
     private let firestoreRepository: FirestoreRepository
-    
-    init(firestoreRepository: FirestoreRepository = FirestoreRepositoryImpl()) {
-        self.firestoreRepository = firestoreRepository
+
+  
+    @Published var text: String = ""
+    @Published private(set) var createdAt: String = ""
+    @Published private(set) var loading: Bool = false
+
+    let isUpdate: Bool
+    var disable: Bool {
+        return text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
-    func onSave(text: String) {
-        let data = Todo(id: firestoreRepository.fetchDocId(Todo.collectionPath), text: text)
-        firestoreRepository.save(data: data, documentPath: data.documentPath) { (error) in
-            if let error = error { print(error); }
-            // success
+    init(
+        firestoreRepository: FirestoreRepository = FirestoreRepositoryImpl(),
+        todo: Todo?
+    ) {
+        self.firestoreRepository = firestoreRepository
+        if let data = todo {
+            isUpdate = true
+            self.text = data.text
+            self.createdAt = data.dateLabel
+        } else {
+            isUpdate = false
+        }
+    }
+    
+    func onSave(completion: ((Error?) -> Void)? = nil) {
+        loading = true
+        let docId = firestoreRepository.fetchDocId(Todo.collectionPath)
+        let data = Todo(id: docId, text: text)
+        if (isUpdate) {
+            firestoreRepository.update(data: data, documentPath: data.documentPath, completion: { [weak self] error in
+                self?.loading = false
+                completion?(error)
+            })
+        } else {
+            firestoreRepository.save(data: data, documentPath: data.documentPath, completion: { [weak self] error in
+                self?.loading = false
+                completion?(error)
+            })
         }
     }
 }

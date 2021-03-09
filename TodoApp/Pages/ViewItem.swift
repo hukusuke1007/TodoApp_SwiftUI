@@ -11,3 +11,8 @@ struct ViewItem: Identifiable {
     let id = UUID()
     let view: AnyView
 }
+
+struct AlertItem: Identifiable {
+    let id = UUID()
+    let view: Alert
+}
