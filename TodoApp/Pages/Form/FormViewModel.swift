@@ -13,12 +13,12 @@ final class FormViewModel: ObservableObject {
     @Published private(set) var createdAt: String = ""
     @Published private(set) var loading: Bool = false
 
-    let isUpdate: Bool
     var disable: Bool {
         return text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
     private let firestoreRepository: FirestoreRepository
+    private let isUpdate: Bool
     
     init(
         firestoreRepository: FirestoreRepository = FirestoreRepositoryImpl(),

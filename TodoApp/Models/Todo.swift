@@ -9,18 +9,23 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct Todo: Identifiable, Codable {
+    /// Static
     static let path: String = "todo"
     static let collectionPath: String = "personal/v1/\(Self.path)"
     static func documentPath(id: String) -> String {
         return "\(Self.collectionPath)/\(id)"
     }
     
+    /// FieldValue
     let text: String
-    
     @DocumentID var id: String?
     @ServerTimestamp var createdAt: Timestamp?
     @ServerTimestamp var updatedAt: Timestamp?
     
+    /// Getter
+    var documentPath: String {
+        return Self.documentPath(id: id!)
+    }
     var dateLabel: String {
         if let data = createdAt {
             let formatter = DateFormatter()
@@ -32,17 +37,8 @@ struct Todo: Identifiable, Codable {
         return "-"
     }
     
-    var documentPath: String {
-        return Self.documentPath(id: id!)
-    }
-    
     init(id: String, text: String) {
         self.id = id
-        self.text = text
-    }
-    
-    init(text: String) {
-        self.id = UUID().uuidString
         self.text = text
     }
 }
