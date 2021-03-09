@@ -11,7 +11,7 @@ import Combine
 struct FormView: View {
     
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var viewModel: FormViewModel
+    @ObservedObject private var viewModel: FormViewModel
     @State var alertItem: AlertItem?
     
     init(todo: Todo? = nil) {

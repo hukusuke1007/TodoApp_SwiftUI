@@ -9,9 +9,6 @@ import Combine
 
 final class FormViewModel: ObservableObject {
     
-    private let firestoreRepository: FirestoreRepository
-
-  
     @Published var text: String = ""
     @Published private(set) var createdAt: String = ""
     @Published private(set) var loading: Bool = false
@@ -20,6 +17,8 @@ final class FormViewModel: ObservableObject {
     var disable: Bool {
         return text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
+    
+    private let firestoreRepository: FirestoreRepository
     
     init(
         firestoreRepository: FirestoreRepository = FirestoreRepositoryImpl(),

@@ -6,20 +6,26 @@
 //
 
 import SwiftUI
+import Combine
 
 struct HomeView: View {
-    @State var items: [Todo] = []
+    
     @State var showingSetting = false
+    @ObservedObject private var viewModel: HomeViewModel
     @State var modal: ViewItem?
+    
+    init() {
+        self.viewModel = HomeViewModel()
+    }
     
     var body: some View {
         NavigationView {
             ZStack {
                 /// リスト
                 List {
-                    ForEach(items) { item in
+                    ForEach(viewModel.items) { item in
                         Button(action: {
-                            modal = ViewItem(view: AnyView(FormView()))
+                            modal = ViewItem(view: AnyView(FormView(todo: item)))
                         }) {
                             VStack {
                                 Text(item.dateLabel)
@@ -30,7 +36,9 @@ struct HomeView: View {
                         }
                     }
                     .onDelete(perform: { indexSet in
-                        items.remove(atOffsets: indexSet)
+                        if let index = indexSet.first {
+                            viewModel.onDelete(index: index)
+                        }
                     })
                 }
                 .listStyle(InsetGroupedListStyle())
@@ -74,11 +82,6 @@ struct HomeView: View {
             }
         }
         .sheet(item: $modal) { $0.view }
-        .onAppear {
-            for i in 0..<20 {
-                items.append(Todo(text: "\(i)"))
-            }
-        }
     }
 }
 
