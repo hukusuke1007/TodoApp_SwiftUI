@@ -11,6 +11,7 @@ import FirebaseFirestoreSwift
 protocol DocumentRepository: class {
     func fetchDocId(_ path: String) -> String
     func save<T: Encodable>(data: T, documentPath: String, completion: ((Error?) -> Void)?)
+    func update<T: Encodable>(data: T,  documentPath: String, completion: ((Error?) -> Void)?)
     func update(data: [AnyHashable: Any], documentPath: String, completion: ((Error?) -> Void)?)
     func delete(documentPath: String, completion: ((Error?) -> Void)?)
     func fetch<T: Decodable>(documentPath: String, completion: ((T?, Error?) -> Void)?)
@@ -31,6 +32,16 @@ final class DocumentRepositoryImpl: DocumentRepository {
     func save<T: Encodable>(data: T, documentPath: String, completion: ((Error?) -> Void)? = nil) {
         do {
             try db.document(documentPath).setData(from: data, merge: true, completion: completion)
+        } catch let error {
+            completion?(error)
+        }
+    }
+    
+    func update<T: Encodable>(data: T,  documentPath: String, completion: ((Error?) -> Void)? = nil) {
+        do {
+            let encoder = Firestore.Encoder()
+            let updateData = try encoder.encode(data)
+            db.document(documentPath).updateData(updateData, completion: completion)
         } catch let error {
             completion?(error)
         }
