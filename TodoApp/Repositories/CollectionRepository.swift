@@ -32,7 +32,7 @@ final class CollectionRepositoryImpl<T: Decodable>: CollectionRepository {
         query: ((CollectionReference) -> Query)? = nil,
         completion: (([T]?, Error?) -> Void)? = nil
     ) {
-        var _query = query != nil ? db.collection(collectionPath) : query!(db.collection(collectionPath))
+        var _query = query != nil ? query!(db.collection(collectionPath)) : db.collection(collectionPath)
         if let limit = limit {
             _query = _query.limit(to: limit)
         }

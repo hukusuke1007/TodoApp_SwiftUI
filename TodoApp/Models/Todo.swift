@@ -28,6 +28,7 @@ struct Todo: Identifiable, Codable {
             formatter.dateStyle = .medium
             formatter.timeStyle = .none
             formatter.doesRelativeDateFormatting = true
+            // formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMMMhms", options: 0, locale: Calendar.current.locale)
             return formatter.string(from: data.dateValue())
         }
         return "-"
