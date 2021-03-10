@@ -13,8 +13,8 @@ protocol DocumentRepository: class {
     func save<T: Encodable>(data: T, documentPath: String, completion: ((Error?) -> Void)?)
     func update<T: Encodable>(data: T,  documentPath: String, completion: ((Error?) -> Void)?)
     func update(data: [AnyHashable: Any], documentPath: String, completion: ((Error?) -> Void)?)
-    func delete(documentPath: String, completion: ((Error?) -> Void)?)
     func fetch<T: Decodable>(documentPath: String, completion: ((T?, Error?) -> Void)?)
+    func delete(documentPath: String, completion: ((Error?) -> Void)?)
 }
 
 final class DocumentRepositoryImpl: DocumentRepository {
@@ -52,10 +52,6 @@ final class DocumentRepositoryImpl: DocumentRepository {
         db.document(documentPath).updateData(updateData, completion: completion)
     }
     
-    func delete(documentPath: String, completion: ((Error?) -> Void)? = nil) {
-        db.document(documentPath).delete(completion: completion)
-    }
-    
     func fetch<T: Decodable>(documentPath: String, completion: ((T?, Error?) -> Void)? = nil) {
         db.document(documentPath).getDocument { (snapshot, error) in
             do {
@@ -65,6 +61,10 @@ final class DocumentRepositoryImpl: DocumentRepository {
                 completion?(nil, error)
             }
         }
+    }
+    
+    func delete(documentPath: String, completion: ((Error?) -> Void)? = nil) {
+        db.document(documentPath).delete(completion: completion)
     }
 }
 
