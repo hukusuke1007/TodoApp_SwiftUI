@@ -29,7 +29,11 @@ final class HomeViewModel: ObservableObject {
         self.firebaseAuthRepository = firebaseAuthRepository
         let userId = firebaseAuthRepository.userId!
         self.collectionPath = Todo.collectionPath(userId: userId)
-        collectionRepository.fetchListener(collectionPath: self.collectionPath, limit: limit) { [weak self] (docs: [Todo]?, error) in
+        collectionRepository.fetchListener(
+            collectionPath: self.collectionPath,
+            limit: limit,
+            query: { $0.order(by: "createdAt", descending: true) }
+        ) { [weak self] (docs: [Todo]?, error) in
             guard let self = self else { return }
             if let error = error { print(error); return; }
             if let docs = docs {
@@ -58,7 +62,11 @@ final class HomeViewModel: ObservableObject {
             return
         }
         self.pagingLimit += self.limit
-        collectionRepository.fetchListener(collectionPath: self.collectionPath, limit: pagingLimit) { [weak self] (docs: [Todo]?, error) in
+        collectionRepository.fetchListener(
+            collectionPath: self.collectionPath,
+            limit: limit,
+            query: { $0.order(by: "createdAt", descending: true) }
+        ) { [weak self] (docs: [Todo]?, error) in
             guard let self = self else { return }
             if let error = error { print(error); return; }
             if let docs = docs {

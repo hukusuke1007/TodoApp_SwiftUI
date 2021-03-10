@@ -10,7 +10,7 @@ import FirebaseFirestoreSwift
 
 protocol CollectionRepository: class {
     var hasMore: Bool { get }
-    func fetchListener<T: Decodable>(collectionPath: String, limit: Int?, completion: (([T]?, Error?) -> Void)?)
+    func fetchListener<T: Decodable>(collectionPath: String, limit: Int?, query: ((CollectionReference) -> Query)?, completion: (([T]?, Error?) -> Void)?)
     func dispose()
 }
 
@@ -26,8 +26,13 @@ final class CollectionRepositoryImpl<T: Decodable>: CollectionRepository {
         self.db = db
     }
     
-    func fetchListener<T: Decodable>(collectionPath: String, limit: Int?, completion: (([T]?, Error?) -> Void)? = nil) {
-        var _query = db.collection(collectionPath).order(by: "createdAt", descending: true)
+    func fetchListener<T: Decodable>(
+        collectionPath: String,
+        limit: Int?,
+        query: ((CollectionReference) -> Query)? = nil,
+        completion: (([T]?, Error?) -> Void)? = nil
+    ) {
+        var _query = query != nil ? db.collection(collectionPath) : query!(db.collection(collectionPath))
         if let limit = limit {
             _query = _query.limit(to: limit)
         }
