@@ -14,6 +14,9 @@ struct Todo: Identifiable, Codable {
     static func collectionPath(userId: String) -> String {
         return "personal/v1/user/\(userId)/\(Self.collectionName)"
     }
+    static func documentPath(userId: String, docId: String) -> String {
+        return "\(Self.collectionPath(userId: userId))/\(docId)"
+    }
     
     /// FieldValue
     let text: String
