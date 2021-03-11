@@ -16,7 +16,7 @@ protocol CollectionRepository: class {
 
 final class CollectionRepositoryImpl<T: Decodable>: CollectionRepository {
     
-    var hasMore: Bool = false
+    private(set) var hasMore: Bool = false
     
     private let db: Firestore
     private var _data: [Decodable] = []
