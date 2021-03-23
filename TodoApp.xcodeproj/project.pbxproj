@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		00E66C5AB105F4A0F4DD85EF /* Pods_TodoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D26EBB6547C89E478720D4D4 /* Pods_TodoApp.framework */; };
 		0C1104B025E8BFE8004203C3 /* TodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1104AF25E8BFE8004203C3 /* TodoApp.swift */; };
-		0C1104B225E8BFE8004203C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1104B125E8BFE8004203C3 /* ContentView.swift */; };
 		0C1104B425E8BFE9004203C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C1104B325E8BFE9004203C3 /* Assets.xcassets */; };
 		0C1104B725E8BFE9004203C3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C1104B625E8BFE9004203C3 /* Preview Assets.xcassets */; };
 		0C1104C225E8BFE9004203C3 /* TodoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1104C125E8BFE9004203C3 /* TodoAppTests.swift */; };
@@ -19,6 +18,7 @@
 		0C2F739125F76BE800E513BE /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F739025F76BE800E513BE /* HomeViewModel.swift */; };
 		0C2F739625F7B09D00E513BE /* CollectionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F739525F7B09D00E513BE /* CollectionRepository.swift */; };
 		0C2F739E25F7CDCD00E513BE /* FirebaseAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2F739D25F7CDCD00E513BE /* FirebaseAuthRepository.swift */; };
+		0C3C7E872600DC000032BCC8 /* FirestoreSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3C7E862600DC000032BCC8 /* FirestoreSample.swift */; };
 		0C401BBA25F59905007B487B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C401BB925F59905007B487B /* HomeView.swift */; };
 		0C401BC225F5994A007B487B /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C401BC125F5994A007B487B /* FormView.swift */; };
 		0C401BC725F5995E007B487B /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C401BC625F5995E007B487B /* SettingView.swift */; };
@@ -53,7 +53,6 @@
 /* Begin PBXFileReference section */
 		0C1104AC25E8BFE8004203C3 /* TodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C1104AF25E8BFE8004203C3 /* TodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoApp.swift; sourceTree = "<group>"; };
-		0C1104B125E8BFE8004203C3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0C1104B325E8BFE9004203C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C1104B625E8BFE9004203C3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0C1104B825E8BFE9004203C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,6 +67,7 @@
 		0C2F739025F76BE800E513BE /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		0C2F739525F7B09D00E513BE /* CollectionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionRepository.swift; sourceTree = "<group>"; };
 		0C2F739D25F7CDCD00E513BE /* FirebaseAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthRepository.swift; sourceTree = "<group>"; };
+		0C3C7E862600DC000032BCC8 /* FirestoreSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreSample.swift; sourceTree = "<group>"; };
 		0C401BB925F59905007B487B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0C401BC125F5994A007B487B /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		0C401BC625F5995E007B487B /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -153,6 +153,7 @@
 				0C1104B325E8BFE9004203C3 /* Assets.xcassets */,
 				0C1104B825E8BFE9004203C3 /* Info.plist */,
 				0C1104B525E8BFE9004203C3 /* Preview Content */,
+				0C3C7E862600DC000032BCC8 /* FirestoreSample.swift */,
 			);
 			path = TodoApp;
 			sourceTree = "<group>";
@@ -197,8 +198,7 @@
 		0C401BB825F598B7007B487B /* Pages */ = {
 			isa = PBXGroup;
 			children = (
-				0C1104B125E8BFE8004203C3 /* ContentView.swift */,
-				0CE5DEEE25F6EAAA001CEE62 /* ViewItem.swift */,
+				0CE95524260AB1E1001534D5 /* Parts */,
 				0C401BD125F59B35007B487B /* Home */,
 				0C401BD025F59B2C007B487B /* Form */,
 				0C401BCF25F59B20007B487B /* Setting */,
@@ -247,6 +247,14 @@
 				0CE5DEF925F6F5BB001CEE62 /* View.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		0CE95524260AB1E1001534D5 /* Parts */ = {
+			isa = PBXGroup;
+			children = (
+				0CE5DEEE25F6EAAA001CEE62 /* ViewItem.swift */,
+			);
+			path = Parts;
 			sourceTree = "<group>";
 		};
 		820916C8192C4F6E2C285D2F /* Frameworks */ = {
@@ -517,13 +525,13 @@
 				0C401BDB25F59E1B007B487B /* SettingViewModel.swift in Sources */,
 				0CE5DEFA25F6F5BB001CEE62 /* View.swift in Sources */,
 				0C401BC725F5995E007B487B /* SettingView.swift in Sources */,
+				0C3C7E872600DC000032BCC8 /* FirestoreSample.swift in Sources */,
 				0C2F739E25F7CDCD00E513BE /* FirebaseAuthRepository.swift in Sources */,
 				0CE5DEEF25F6EAAA001CEE62 /* ViewItem.swift in Sources */,
 				0CE5DEE325F6E9E7001CEE62 /* Todo.swift in Sources */,
 				0C2F738125F712BF00E513BE /* FormViewModel.swift in Sources */,
 				0C401BBA25F59905007B487B /* HomeView.swift in Sources */,
 				0C2F739125F76BE800E513BE /* HomeViewModel.swift in Sources */,
-				0C1104B225E8BFE8004203C3 /* ContentView.swift in Sources */,
 				0C1104B025E8BFE8004203C3 /* TodoApp.swift in Sources */,
 				0C401BD325F59C2C007B487B /* BundleRepository.swift in Sources */,
 				0C2F737C25F7127400E513BE /* DocumentRepository.swift in Sources */,
