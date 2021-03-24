@@ -13,8 +13,8 @@ struct HomeView: View {
     @State private var showingSetting = false
     @State var modal: ViewItem?
     
-    init() {
-        self.viewModel = HomeViewModel()
+    init(viewModel: HomeViewModel = HomeViewModel()) {
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -24,7 +24,7 @@ struct HomeView: View {
                 List {
                     ForEach(viewModel.items) { item in
                         Button(action: {
-                            modal = ViewItem(view: AnyView(FormView(todo: item)))
+                            modal = ViewItem(view: AnyView(FormView(viewModel: FormViewModel(todo: item))))
                         }) {
                             VStack {
                                 HStack {
@@ -75,7 +75,7 @@ struct HomeView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            modal = ViewItem(view: AnyView(FormView()))
+                            modal = ViewItem(view: AnyView(FormView(viewModel: FormViewModel())))
                         }) {
                             Image(systemName: "plus")
                                 .frame(width: 48, height: 48)

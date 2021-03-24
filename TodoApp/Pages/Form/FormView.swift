@@ -13,8 +13,8 @@ struct FormView: View {
     @ObservedObject private var viewModel: FormViewModel
     @State var alertItem: AlertItem?
     
-    init(todo: Todo? = nil) {
-        self.viewModel = FormViewModel(todo: todo)
+    init(viewModel: FormViewModel) {
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -101,7 +101,7 @@ struct FormView_Previews: PreviewProvider {
         ZStack {
             
         }.sheet(isPresented: .constant(true)) {
-            FormView()
+            FormView(viewModel: FormViewModel(todo: nil))
         }
     }
 }

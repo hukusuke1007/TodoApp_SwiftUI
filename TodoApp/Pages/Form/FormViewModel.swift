@@ -24,7 +24,7 @@ final class FormViewModel: ObservableObject {
     init(
         documentRepository: DocumentRepository = DocumentRepositoryImpl(),
         firebaseAuthRepository: FirebaseAuthRepository = FirebaseAuthRepositoryImpl(),
-        todo: Todo?
+        todo: Todo? = nil
     ) {
         self.documentRepository = documentRepository
         self.firebaseAuthRepository = firebaseAuthRepository
